@@ -1,0 +1,18 @@
+<!-- Single four-petal mark, centred. petal.svg is the seamless REPEATING tile
+     (petals sit on the four corners so they only close into flowers when
+     tiled) and is still what .petalline uses. Used single and no-repeat it
+     renders four clipped quarters, which reads as a hollow square, so the
+     standalone mark gets its own file with the petals about the centre.
+     Filled #000 rather than currentColor: as a CSS mask image this SVG is an
+     isolated document and does not inherit the host element's colour. Black
+     is simply opaque in the alpha mask; the colour comes from the element's
+     own background:currentColor. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <defs><path id="p" d="M0,0 A11.33,11.33 0 0,1 20,0 A11.33,11.33 0 0,1 0,0Z"/></defs>
+  <g fill="#000" transform="translate(20,20)">
+    <use href="#p" transform="rotate(0)"/>
+    <use href="#p" transform="rotate(90)"/>
+    <use href="#p" transform="rotate(180)"/>
+    <use href="#p" transform="rotate(270)"/>
+  </g>
+</svg>

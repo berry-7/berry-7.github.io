@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Baked by Naledi">
+  <rect width="64" height="64" rx="14" fill="#F7F1E6"/>
+  <g fill="none" stroke="#7C2A34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 50V15"/>
+    <path d="M32 21c-6.5-4.5-11-2-11-2s2 6.5 11 6.5"/>
+    <path d="M32 21c6.5-4.5 11-2 11-2s-2 6.5-11 6.5"/>
+    <path d="M32 32c-6.5-4.5-11-2-11-2s2 6.5 11 6.5"/>
+    <path d="M32 32c6.5-4.5 11-2 11-2s-2 6.5-11 6.5"/>
+  </g>
+</svg>

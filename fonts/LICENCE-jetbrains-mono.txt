@@ -1,0 +1,13 @@
+JetBrains Mono
+--------------
+File: jetbrains-mono-400.woff2 (21,168 bytes, latin subset, weight 400)
+
+Source:  https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.1.2/files/jetbrains-mono-latin-400-normal.woff2
+Fetched: 2026-09-10
+Verified: file signature reads "wOF2" (valid WOFF2 container)
+
+Licence: SIL Open Font License 1.1 — https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt
+Copyright 2020 The JetBrains Mono Project Authors.
+
+Used only for the hero tile captions (design-system.md §1). It is the second and
+final type family on this site; the wordmark and everything else is Switzer.

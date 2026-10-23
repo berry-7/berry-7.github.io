@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koekie Club | Cookies, banana bread, brownies and donuts, Potchefstroom</title>
+<meta name="description" content="Chocolate chip cookies, banana bread, fudgy brownies and glazed donuts, baked fresh in Potchefstroom with real butter and real chocolate. Order a treat box on WhatsApp.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css?v=9">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <p class="offer">A free cookie with your first box</p>
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__icon" href="https://wa.me/27XXXXXXXXX?text=Hi%20Koekie%20Club%2C%20I%27d%20like%20to%20order%20a%20treat%20box" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+    </a>
+    <ul class="nav__l">
+      <li><a href="#about">About</a></li>
+      <li><a href="#bakes">Our bakes</a></li>
+      <li><a href="#box">Treat box</a></li>
+    </ul>
+    <a class="logo" href="#main" aria-label="Koekie Club, home">
+      <span class="logo__a">Koekie <small>Potch</small></span>
+      <span class="logo__b"><span class="logo__amp" aria-hidden="true">*</span> Club</span>
+    </a>
+    <ul class="nav__r">
+      <li><a href="#promise">Promise</a></li>
+      <li><a href="#visit">Visit us</a></li>
+      <li><a href="#box">Order</a></li>
+    </ul>
+    <button class="nav__icon nav__menu" type="button" aria-expanded="false" aria-controls="sheet" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 12h14M5 16h14"/></svg>
+    </button>
+  </nav>
+</header>
+
+<div class="sheet" id="sheet" hidden>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#bakes">Our bakes</a></li>
+    <li><a href="#box">Treat box</a></li>
+    <li><a href="#promise">Promise</a></li>
+    <li><a href="#visit">Visit us</a></li>
+  </ul>
+  <a class="btn" href="https://wa.me/27XXXXXXXXX?text=Hi%20Koekie%20Club%2C%20I%27d%20like%20to%20order%20a%20treat%20box" target="_blank" rel="noopener">Order your box today <i aria-hidden="true">&#8599;</i></a>
+</div>
+
+<main id="main">
+
+<section class="hero" id="about" data-bake="cookies">
+  <div class="hero__panel">
+    <div class="hero__copy">
+      <h1 class="h1"><span class="ln"><span>Sweet tooth?</span></span><span class="ln"><span>Sorted.</span></span></h1>
+      <p class="hero__sub hi">Choc chip cookies, banana bread, brownies and donuts, baked in Potch the morning you collect.</p>
+      <a class="btn btn--hero hi" id="heroOrder" href="https://wa.me/27XXXXXXXXX?text=Hi%20Koekie%20Club%2C%20I%27d%20like%20to%20order%20a%20dozen%20choc%20chip%20cookies" target="_blank" rel="noopener">Order your box today <i aria-hidden="true">&#8599;</i></a>
+      <div class="chips" role="group" aria-label="Pick your bake">
+        <span class="chips__label hi" aria-hidden="true">Pick your bake</span>
+        <button class="chip hi" type="button" data-pick="cookies" aria-pressed="true"><img src="img/h-cookie.webp?v=3" alt="" width="34" height="34">Cookies</button>
+        <button class="chip hi" type="button" data-pick="bread" aria-pressed="false"><img src="img/bananabread.webp" alt="" width="34" height="34">Banana bread</button>
+        <button class="chip hi" type="button" data-pick="brownies" aria-pressed="false"><img src="img/h-brownie.webp" alt="" width="34" height="34">Brownies</button>
+        <button class="chip hi" type="button" data-pick="donuts" aria-pressed="false"><img src="img/h-donut-chip.webp" alt="" width="34" height="34">Donuts</button>
+      </div>
+      <p class="sr" id="bakeSay" aria-live="polite"></p>
+    </div>
+
+    <div class="echo" aria-hidden="true"><span>Cookies</span><span>Cookies</span><span>Cookies</span></div>
+    <div class="stage">
+      <img class="bake is-on" data-bake="cookies" src="img/h-cookie.webp?v=3" alt="A chewy chocolate chip cookie" width="760" height="760">
+      <img class="bake" data-bake="bread" src="img/bananabread.webp" alt="A banana walnut loaf with two slices cut" width="900" height="334">
+      <img class="bake" data-bake="brownies" src="img/h-brownie.webp" alt="A thick fudgy brownie with a glossy chocolate drizzle" width="900" height="781">
+      <img class="bake" data-bake="donuts" src="img/h-donut.webp?v=4" alt="A pink-glazed donut with rainbow sprinkles, casting a hard shadow in the sun" width="1000" height="1000">
+      <span class="flower" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M100.0 50.0L98.8 53.2L95.6 56.0L91.2 58.2L86.7 59.8L83.2 61.3L81.4 63.0L81.5 65.5L82.9 69.0L84.9 73.3L86.5 78.0L86.8 82.3L85.4 85.4L82.3 86.8L78.0 86.5L73.3 84.9L69.0 82.9L65.5 81.5L63.0 81.4L61.3 83.2L59.8 86.7L58.2 91.2L56.0 95.6L53.2 98.8L50.0 100.0L46.8 98.8L44.0 95.6L41.8 91.2L40.2 86.7L38.7 83.2L37.0 81.4L34.5 81.5L31.0 82.9L26.7 84.9L22.0 86.5L17.7 86.8L14.6 85.4L13.2 82.3L13.5 78.0L15.1 73.3L17.1 69.0L18.5 65.5L18.6 63.0L16.8 61.3L13.3 59.8L8.8 58.2L4.4 56.0L1.2 53.2L0.0 50.0L1.2 46.8L4.4 44.0L8.8 41.8L13.3 40.2L16.8 38.7L18.6 37.0L18.5 34.5L17.1 31.0L15.1 26.7L13.5 22.0L13.2 17.7L14.6 14.6L17.7 13.2L22.0 13.5L26.7 15.1L31.0 17.1L34.5 18.5L37.0 18.6L38.7 16.8L40.2 13.3L41.8 8.8L44.0 4.4L46.8 1.2L50.0 0.0L53.2 1.2L56.0 4.4L58.2 8.8L59.8 13.3L61.3 16.8L63.0 18.6L65.5 18.5L69.0 17.1L73.3 15.1L78.0 13.5L82.3 13.2L85.4 14.6L86.8 17.7L86.5 22.0L84.9 26.7L82.9 31.0L81.5 34.5L81.4 37.0L83.2 38.7L86.7 40.2L91.2 41.8L95.6 44.0L98.8 46.8Z"/></svg><b class="flower__t"><small>a dozen</small>R90</b></span>
+      <span class="burst" aria-hidden="true">Baked this<br>morning!</span>
+      <svg class="spark spark--a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+      <svg class="spark spark--b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+      <svg class="spark spark--c" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+    </div>
+  </div>
+  <div class="checker" aria-hidden="true"></div>
+</section>
+
+<section class="box" id="box">
+  <div class="box__art">
+    <span class="oval rv" aria-hidden="true"><svg viewBox="0 0 100 130"><defs><path id="c2" d="M50 65m-38 0a38 50 0 1 1 76 0a38 50 0 1 1-76 0"/></defs><text><textPath href="#c2" startOffset="58%">100% NATURAL GOODNESS</textPath></text><path d="M50 43a22 22 0 1 0 .1 0ZM42 56h.1M56 52h.1M48 68h.1M60 66h.1M53 60h.1" class="oval__ico"/></svg></span>
+    <img class="box__img rv" src="img/brownies.webp" alt="Two fudgy chocolate brownies with a crackly top, stacked on a white plate" width="820" height="820" loading="lazy">
+    <figure class="quote rv">
+      <span class="quote__mark" aria-hidden="true">&ldquo;</span>
+      <blockquote>The brownies never make it home in one piece, and the kids fight over the last cookie. Our Friday box.</blockquote>
+      <figcaption>Sample review, for this concept</figcaption>
+    </figure>
+    <span class="stamp stamp--hat" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="c3" d="M50 50m-34 0a34 34 0 1 1 68 0a34 34 0 1 1-68 0"/></defs><text class="sm"><textPath href="#c3" textLength="211" lengthAdjust="spacing">A DASH OF HAPPINESS IN EVERY BITE &#183; </textPath></text><path class="stamp__ico stamp__ico--fill" d="M38 56h24v8H38zM37 55c-6-2-6-12 2-12c1-6 9-8 11-3c3-5 11-3 11 3c8 0 8 10 2 12z"/></svg></span>
+    <span class="stamp stamp--donut" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" class="stamp__ico--fill"/><circle cx="50" cy="50" r="7" fill="#fff"/><path d="M36 42l4 3M58 36l-2 4M62 56l-4-1M44 62l2-4" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span>
+  </div>
+
+  <div class="box__copy" id="bakes">
+    <h2 class="h2" data-split>Sweetness delivered in every <u>box,</u> <em>guaranteed</em> fresh!</h2>
+    <ul class="menu rv">
+      <li><span>Choc chip cookies, dozen</span><i></i><b>R90</b></li>
+      <li><span>Banana bread loaf</span><i></i><b>R85</b></li>
+      <li><span>Fudgy brownies, box of 6</span><i></i><b>R95</b></li>
+      <li><span>Glazed donuts, box of 6</span><i></i><b>R110</b></li>
+    </ul>
+    <a class="btn rv" href="https://wa.me/27XXXXXXXXX?text=Hi%20Koekie%20Club%2C%20I%27d%20like%20to%20order%20a%20treat%20box" target="_blank" rel="noopener">Order your box today <i aria-hidden="true">&#8599;</i></a>
+  </div>
+</section>
+
+<section class="promise" id="promise">
+  <div class="promise__in">
+  <ul class="promise__row">
+    <li class="rv"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5h4M11 5v4l-4 8a1 1 0 0 0 1 1.5h8a1 1 0 0 0 1-1.5l-4-8V5M6 6l12 12"/></svg></span><p><b>No preservatives:</b> made to be eaten this week, not this month.</p></li>
+    <li class="rv"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12v10H6zM6 10.3h12M6 13.7h12M10 7v10M14 7v10"/></svg></span><p><b>Real chocolate:</b> dark chunks, chopped by hand, never compound.</p></li>
+    <li class="rv"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10ZM5 5l14 14"/></svg></span><p><b>Real butter:</b> never margarine, never an oil blend.</p></li>
+    <li class="rv"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14c0 9-5 14-14 14ZM5 19l8-8"/></svg></span><p><b>Freshness guaranteed:</b> baked the morning you collect.</p></li>
+  </ul>
+  <a class="pill rv" href="#visit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>See how we bake our brownies</a>
+  </div>
+</section>
+
+<section class="close" id="visit">
+  <h2 class="h2 h2--c" data-split>Turning dough into delicious fun and yum!</h2>
+  <div class="card">
+    <p class="card__name">Koekie<br>Club</p>
+    <p class="card__i" aria-hidden="true">i</p>
+    <svg class="arc" viewBox="0 0 1000 560" aria-hidden="true"><defs><path id="arc" d="M120 560A380 380 0 0 1 880 560"/></defs><text><textPath href="#arc" startOffset="50%" text-anchor="middle">Savour the sweetness, taste the magic.</textPath></text></svg>
+    <div class="board"><img class="board__cake" src="img/donut-board.webp" alt="A chocolate-glazed donut with chocolate sprinkles and a bite taken out, crumbs beside it" width="900" height="900" loading="lazy"></div>
+    <span class="stamp stamp--love" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="c4" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0"/></defs><text class="sm"><textPath href="#c4" textLength="224" lengthAdjust="spacing">MADE WITH LOVE &#183; BAKED FOR YOU &#183; </textPath></text><path class="stamp__ico--fill" d="M50 62c-12-8-16-13-16-18a7 7 0 0 1 16-3a7 7 0 0 1 16 3c0 5-4 10-16 18Z"/></svg></span>
+    <span class="stamp stamp--smile" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="24" fill="none" stroke="currentColor" stroke-width="4"/><path d="M38 44l6-3-6-3M62 44l-6-3 6-3M38 55c6 10 18 10 24 0Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></svg></span>
+    <a class="btn btn--card" href="https://wa.me/27XXXXXXXXX?text=Hi%20Koekie%20Club%2C%20I%27d%20like%20to%20order%20a%20treat%20box" target="_blank" rel="noopener">Order your box today <i aria-hidden="true">&#8599;</i></a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="checker" aria-hidden="true"></div>
+  <div class="foot__in">
+    <p class="foot__logo">Koekie <span>*</span> Club</p>
+    <p>14 Lombard Street, Potchefstroom &middot; Tue to Sat, 7am to 2pm &middot; Order on WhatsApp by 8pm for next-day collection</p>
+    <p class="foot__small">A concept by Arkline. Photos from Pexels and Pinterest.</p>
+  </div>
+  <p class="foot__big" aria-hidden="true">Koekie Club</p>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="js/main.js?v=4"></script>
+</body>
+</html>
