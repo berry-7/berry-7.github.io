@@ -43,11 +43,17 @@
     var pr = document.querySelector(".pr-lead");
     var light = pr && pr.querySelector(".pr-light");
     if (light) {
+      
+      var ring = light.querySelector(".pr-ring"), glow = light.querySelector(".pr-glow");
+      var spin = light.querySelectorAll("i");
+      gsap.set(spin, { xPercent: -50, yPercent: -50 });
       gsap.timeline({ scrollTrigger: { trigger: pr, start: "top bottom", end: "bottom top",
           scrub: true, refreshPriority: PRI } })
-        .fromTo(light, { "--pr-p": 0 }, { "--pr-p": 540, ease: "none", duration: 1 }, 0)
-        .fromTo(light, { "--pr-o": 0 }, { "--pr-o": 1, ease: "none", duration: 0.3 }, 0)
-        .to(light, { "--pr-o": 0, ease: "none", duration: 0.25 }, 0.75);
+        .fromTo(spin, { rotation: 0 }, { rotation: 540, ease: "none", duration: 1 }, 0)
+        .fromTo(ring, { opacity: 0 }, { opacity: 1, ease: "none", duration: 0.3 }, 0)
+        .fromTo(glow, { opacity: 0 }, { opacity: 0.55, ease: "none", duration: 0.3 }, 0)
+        .to(ring, { opacity: 0, ease: "none", duration: 0.25 }, 0.75)
+        .to(glow, { opacity: 0, ease: "none", duration: 0.25 }, 0.75);
     }
     var gs = document.querySelector(".getsec");
     var bg = gs && gs.querySelector(".getsec-bg");

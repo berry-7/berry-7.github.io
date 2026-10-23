@@ -314,6 +314,10 @@ button{font:inherit;color:inherit}
     left:max(calc(var(--gut) + 14px + 232px),calc(78% - var(--sw) / 2 - 11px));
     top:calc(clamp(104px,16.5svh,150px) + 147px - var(--sw) / 2.6)}
   .hero .sub{max-width:230px}
+  
+  .hero-stack{position:relative;left:auto;top:auto;rotate:none;justify-self:center;
+    --sw:min(80vw,340px);width:var(--sw);margin:clamp(4px,2svh,20px) 0 0}
+  .hero h1,.hero .sub,.hero-chip{text-shadow:none}
 }
 @media (min-width:560px) and (max-width:759px){
   .hero-stack{--sw:min(36vw,240px);width:var(--sw);
@@ -442,6 +446,16 @@ button{font:inherit;color:inherit}
   --sh-spiral:0 30px 50px -30px rgba(0,0,0,.38)}
 
 .in-spiral .nav-in{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.88)}
+
+@media (max-width:760px){
+  .nav-in,.dock,.port-frost{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav-in{background:rgba(255,255,255,.88)}
+  [data-nav="dark"] .nav-in{background:rgba(0,0,0,.86)}
+  .dock{background:rgba(255,255,255,.94)}
+  
+  .port-frost{background:linear-gradient(to bottom,rgba(240,236,228,0),rgba(240,236,228,.85));
+    -webkit-mask-image:none;mask-image:none}
+}
 .spiral.is-live .spiral-intro{display:none}
 .spiral.is-live [data-spiral-pin]{height:100svh;position:relative}
 .spiral-stage.is-live{display:block;position:absolute;top:0;bottom:0;margin:0;z-index:1;
@@ -619,8 +633,9 @@ button{font:inherit;color:inherit}
   display:flex;flex-direction:column}
 .pcard-art{border-radius:14px;background:var(--wash);overflow:hidden;aspect-ratio:320/200}
 
-.pcard-art svg{display:block;width:100%;height:100%;overflow:visible;
-  filter:drop-shadow(0 6px 8px rgba(0,0,0,.1))}
+.pcard-art svg{display:block;width:100%;height:100%;overflow:visible}
+
+.pa-ink{position:absolute;inset:0;filter:drop-shadow(0 6px 8px rgba(0,0,0,.1))}
 .pcard-art text{font-family:inherit;font-weight:600;letter-spacing:-.01em}
 
 .pa-grid{background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),
@@ -637,7 +652,8 @@ button{font:inherit;color:inherit}
 @media (max-width:800px){.pcards{grid-template-columns:minmax(0,1fr);gap:16px}}
 .pcard-art{position:relative}
 .pcard-art .pl{position:absolute;inset:0}
-.pcard .pm{will-change:transform,opacity;
+
+.pcard .pm{
   transition:transform .9s var(--ease),opacity .45s var(--ease);
   transition-delay:calc(var(--d,0ms) + var(--md,0ms) + 380ms)}
 
@@ -656,7 +672,7 @@ button{font:inherit;color:inherit}
 .p3-cur{--md:120ms}
 .pcard:not(.in) .p3-on{opacity:0}
 .pcard:not(.in) .p3-cur{opacity:0;transform:translate(-23.1%,43%)}
-@media (prefers-reduced-motion:reduce){.pcard .pm{transition:none;will-change:auto}}
+@media (prefers-reduced-motion:reduce){.pcard .pm{transition:none}}
 .risk{max-width:min(900px,100%)}
 .risk .lead{max-width:56ch}
 .badge{display:inline-flex;align-items:center;gap:9px;font-size:var(--t-meta);
@@ -819,15 +835,18 @@ footer{background:var(--night);color:#fff;padding-top:clamp(56px,7vw,104px);
 .fx .pr-lead::before,.fx .pr-lead::after{content:none}
 .pr-light{display:none}
 .fx .pr-light{display:block;position:absolute;inset:0;border-radius:inherit;pointer-events:none}
-.fx .pr-light::before,.fx .pr-light::after{content:"";position:absolute;pointer-events:none;
-  opacity:var(--pr-o,0);
-  background:conic-gradient(from calc(var(--pr-p,0) * 1deg),transparent 0deg 220deg,rgba(18,179,63,.35) 290deg,
-    var(--acc) 340deg,transparent 360deg)}
-.fx .pr-light::before{inset:0;border-radius:inherit;padding:1.5px;
+
+.fx .pr-ring,.fx .pr-glow{position:absolute;overflow:hidden;opacity:0;will-change:opacity}
+.fx .pr-ring{inset:0;border-radius:inherit;padding:1.5px;
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude}
-.fx .pr-light::after{inset:-3px;border-radius:15px;z-index:-1;filter:blur(9px);
-  opacity:calc(var(--pr-o,0) * .55)}
+.fx .pr-glow{inset:-3px;border-radius:15px;z-index:-1;filter:blur(9px)}
+.fx .pr-light i{position:absolute;left:50%;top:50%;width:max(200%,200px);aspect-ratio:1;
+  margin:0;will-change:transform;
+  background:conic-gradient(transparent 0deg 220deg,rgba(18,179,63,.35) 290deg,
+    var(--acc) 340deg,transparent 360deg)}
+
+@media (max-width:760px){.fx .pr-glow{display:none}}
 
 .pr-badge .dot::before,.pr-badge .dot::after{animation:none}
 .pr-badge .dot::before{opacity:.25}

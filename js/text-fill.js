@@ -4,8 +4,7 @@
   if (!window.gsap || !window.ScrollTrigger) return;
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   gsap.registerPlugin(ScrollTrigger);
-
-  var split = function (el) {
+  var split = function (el, byWord) {
     var chars = [];
     var text = el.textContent.replace(/\s+/g, " ").trim();
     el.textContent = "";
@@ -18,6 +17,7 @@
       if (wi) vis.appendChild(document.createTextNode(" "));
       var w = document.createElement("span");
       w.className = "tf-word";
+      if (byWord) { w.textContent = word; chars.push(w); vis.appendChild(w); return; }
       for (var i = 0; i < word.length; i++) {
         var c = document.createElement("span");
         c.className = "tf-ch";
@@ -31,12 +31,12 @@
     el.appendChild(vis);
     return chars;
   };
-
   var body = document.querySelector(".about-body");
-  var chars = [];
+  var chars = [], letters = 0;
   if (body) {
     Array.prototype.forEach.call(body.querySelectorAll("p"), function (p) {
-      chars = chars.concat(split(p));
+      letters += p.textContent.replace(/\s+/g, "").length;
+      chars = chars.concat(split(p, true));
     });
   }
   var lines = Array.prototype.map.call(document.querySelectorAll("[data-fill]"), function (el) {
@@ -48,7 +48,8 @@
       gsap.fromTo(chars, { color: "#b8b8b8" }, {
         color: "#000000",
         ease: "none",
-        stagger: 0.02,
+        
+        stagger: chars.length > 1 ? 0.02 * (letters - 1) / (chars.length - 1) : 0,
         scrollTrigger: {
           trigger: body,
           start: "top 78%",       // first letter starts as the text enters
