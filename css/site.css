@@ -547,7 +547,7 @@ button{font:inherit;color:inherit}
 .getsec .get-ic,.getsec .get h3{color:#fff}
 .getsec .get .n,.getsec .get p{color:var(--faint)}
 
-@media (max-width:560px){.getsec{min-height:100svh;align-content:center}}
+@media (max-width:560px){.getsec{min-height:100svh;min-height:100lvh;align-content:center}}
 .about-grid{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);
   gap:clamp(24px,4vw,64px);margin-top:clamp(36px,5vw,72px);align-items:start}
 .port>img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r)}

@@ -6,6 +6,14 @@
   var rail = document.querySelector(".gets");
   if (!rail) return;
   gsap.registerPlugin(ScrollTrigger);
+  var lvh = function () {
+    var probe = document.createElement("div");
+    probe.style.cssText = "position:fixed;top:0;height:100lvh;width:0;visibility:hidden";
+    document.body.appendChild(probe);
+    var h = probe.offsetHeight || innerHeight;
+    probe.remove();
+    return h;
+  };
 
   var start = function () {
   var mm = gsap.matchMedia();
@@ -30,6 +38,8 @@
         trigger: section,
         pin: section,
         start: function () {
+          
+          if (section.offsetHeight <= lvh() + 1) return "top top";
           return section.offsetHeight < innerHeight ? "center center" : "bottom bottom";
         },
         end: function () { return "+=" + distance(); },
