@@ -4,6 +4,7 @@
 
   var root = document.documentElement;
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   var FADE = false;
 
   var heroWrap = document.querySelector(".hero-wrap");
@@ -12,6 +13,7 @@
   if (hero && !reduce) {
     root.classList.add("curtain");
     if (FADE) root.classList.add("fade");
+
     var oneCol = matchMedia("(max-width:900px)");
     var hold = 1;
     var measureHero = function () {
@@ -25,8 +27,9 @@
       hold = Math.max(1, h);
     };
     measureHero();
-    
+
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureHero);
+
     var queued = false, lastHero = "";
     var paint = function () {
       queued = false;
@@ -37,7 +40,7 @@
       lastHero = v;
       hero.style.setProperty(fade ? "--hero-o" : "--hero-s", v);
     };
-    
+
     var heroOn = true;
     var onScroll = function () {
       if (queued || !heroOn) return;
@@ -54,13 +57,15 @@
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", function () { measureHero(); onScroll(); });
   }
+
   var foot = document.querySelector("footer");
 
   if (foot && root.classList.contains("curtain")) {
     var applyFoot = function () {
-      root.classList.add("no-footcurtain");        
+      root.classList.add("no-footcurtain");
       var h = foot.offsetHeight;
       root.classList.remove("no-footcurtain");
+
       if (h > innerHeight + 4) {
         root.classList.add("no-footcurtain");
         root.style.setProperty("--foot-h", "0px");
@@ -68,6 +73,7 @@
       }
       root.style.setProperty("--foot-h", h + "px");
     };
+
     var setFoot = function (heroShowing) {
       root.setAttribute("data-foot", heroShowing ? "hidden" : "live");
     };
@@ -82,12 +88,14 @@
     var ft;
     addEventListener("resize", function () { clearTimeout(ft); ft = setTimeout(applyFoot, 150); });
   }
+
   var STEP = 80;
   var targets = document.querySelectorAll(".rv, .rv-h, .rv-block, .rv-img");
   var footEl = document.querySelector("footer");
   var inFoot = function (el) { return footEl && footEl.contains(el); };
+
   Array.prototype.forEach.call(document.querySelectorAll(".rv-h"), function (h) {
-    if (h.closest(".hero")) return;      
+    if (h.closest(".hero")) return;
     Array.prototype.forEach.call(h.querySelectorAll(".rv-line>span"), function (s, i) {
       s.style.setProperty("--d", i * STEP + "ms");
     });
@@ -96,7 +104,7 @@
   if (!("IntersectionObserver" in window) || reduce) {
     Array.prototype.forEach.call(targets, function (el) { el.classList.add("in"); });
   } else {
-    
+
     var proxyOf = new Map();
     var io = new IntersectionObserver(function (entries) {
       var blocks = [];
@@ -131,10 +139,12 @@
       });
     }, { rootMargin: "100% 0px" });
     proxyOf.forEach(function (real) { early.observe(real.parentElement); });
+
     requestAnimationFrame(function () {
       Array.prototype.forEach.call(document.querySelectorAll(".hero .rv, .hero .rv-h"),
         function (el) { io.unobserve(el); el.classList.add("in"); });
     });
+
     var footTargets = Array.prototype.filter.call(targets, inFoot);
     var pageBody = document.querySelector(".page-body");
     if (footTargets.length && pageBody) {
@@ -153,22 +163,77 @@
       footCheck();
     }
   }
+
   var navLinks = document.querySelectorAll(".nav-links a");
   var setCurrent = function () {
     Array.prototype.forEach.call(navLinks, function (a) {
       var t = document.querySelector(a.getAttribute("href"));
       var r = t && t.getBoundingClientRect();
       var on = !!(r && r.top <= 74 && r.bottom >= 74);
-      if (on === a.hasAttribute("aria-current")) return;   
+      if (on === a.hasAttribute("aria-current")) return;
       if (on) a.setAttribute("aria-current", "true");
       else a.removeAttribute("aria-current");
     });
+    setBarCurrent();
   };
+
+  var bar = document.getElementById("bnav");
+  var barRow = bar && bar.querySelector(".bnav-links");
+  var barLinks = barRow ? barRow.querySelectorAll("a") : [];
+  var mark = null, held = null, barCur = null;
+  var placeMark = function () {
+    if (!mark) return;
+    var target = held || barCur;
+    Array.prototype.forEach.call(barLinks, function (a) {
+      a.classList.toggle("is-lit", a === target);
+    });
+    if (!target || !target.offsetWidth) { mark.classList.remove("is-on"); return; }
+    var wasOff = !mark.classList.contains("is-on");
+
+    mark.classList.toggle("no-slide", wasOff);
+    mark.style.transform = "translateX(" + target.offsetLeft + "px)";
+    mark.style.width = target.offsetWidth + "px";
+    if (wasOff) { void mark.offsetWidth; mark.classList.add("is-on"); }
+  };
+  var setBarCurrent = function () {
+    if (!mark) return;
+    var line = innerHeight * 0.4, cur = null;
+    Array.prototype.forEach.call(barLinks, function (a) {
+      var t = document.querySelector(a.getAttribute("href"));
+      if (t && t.getBoundingClientRect().top <= line) cur = a;
+    });
+    if (cur === barCur) return;
+    if (barCur) barCur.removeAttribute("aria-current");
+    if (cur) cur.setAttribute("aria-current", "true");
+    barCur = cur;
+    placeMark();
+  };
+  if (barRow) {
+    mark = document.createElement("span");
+    mark.className = "bnav-mark";
+    mark.setAttribute("aria-hidden", "true");
+    barRow.insertBefore(mark, barRow.firstChild);
+    var holdMark = function (a) { if (held !== a) { held = a; placeMark(); } };
+    barRow.addEventListener("pointerover", function (e) {
+      var a = e.target.closest("a");
+      if (a && e.pointerType === "mouse") holdMark(a);
+    });
+    barRow.addEventListener("pointerleave", function () { holdMark(null); });
+    barRow.addEventListener("focusin", function (e) {
+      if (e.target.matches(":focus-visible")) holdMark(e.target);
+    });
+    barRow.addEventListener("focusout", function (e) {
+      if (!barRow.contains(e.relatedTarget)) holdMark(null);
+    });
+
+    addEventListener("resize", placeMark);
+    if (document.fonts) document.fonts.ready.then(placeMark);
+  }
   var toned = document.querySelectorAll("[data-tone]");
   if (toned.length && "IntersectionObserver" in window) {
-    var NAV_LINE = 45;               
+    var NAV_LINE = 45;
     var setTone = function () {
-      
+
       var dark = false;
       var hits = document.elementsFromPoint(innerWidth / 2, NAV_LINE);
       for (var i = 0; i < hits.length; i++) {
@@ -178,9 +243,19 @@
       }
       var tone = dark ? "dark" : "light";
       if (root.getAttribute("data-nav") !== tone) root.setAttribute("data-nav", tone);
+
+      var bDark = false;
+      hits = document.elementsFromPoint(innerWidth / 2, innerHeight - 36);
+      for (i = 0; i < hits.length; i++) {
+        if (hits[i].closest(".bnav")) continue;
+        t = hits[i].closest("[data-tone]");
+        if (t) { bDark = t.getAttribute("data-tone") === "dark"; break; }
+      }
+      tone = bDark ? "dark" : "light";
+      if (root.getAttribute("data-bnav") !== tone) root.setAttribute("data-bnav", tone);
       setCurrent();
     };
-    
+
     var tLast = 0, tTail;
     addEventListener("scroll", function () {
       var now = performance.now();
@@ -192,7 +267,7 @@
     }, { passive: true });
     addEventListener("resize", setTone);
     setTone();
-    
+
     addEventListener("load", function () { requestAnimationFrame(setTone); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setTone);
     if ("MutationObserver" in window) {
@@ -200,6 +275,7 @@
         .observe(root, { attributes: true, attributeFilter: ["class"] });
     }
   }
+
   var toggle = document.getElementById("navToggle");
   var sheet = document.getElementById("navSheet");
 
@@ -219,12 +295,13 @@
     addEventListener("keydown", function (e) {
       if (e.key === "Escape" && sheet.getAttribute("data-open") === "true") setOpen(false);
     });
-    
+
     document.addEventListener("click", function (e) {
       if (sheet.getAttribute("data-open") === "true" &&
           !sheet.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
     });
   }
+
   if (!reduce && matchMedia("(pointer:fine)").matches) {
     Array.prototype.forEach.call(document.querySelectorAll(".mag"), function (el) {
       if (window.gsap) {
@@ -255,6 +332,7 @@
     });
   }
 })();
+
 (function () {
   "use strict";
   var stack = document.querySelector("[data-stack]");
@@ -296,26 +374,46 @@
   };
   setInterval(next, 3400);
 })();
+
 (function () {
   "use strict";
   var dock = document.getElementById("dock");
   var close = document.getElementById("contact");
   if (!dock || !close) return;
 
+  var root = document.documentElement;
+  var topNav = document.querySelector(".nav");
+  var bar = document.getElementById("bnav");
+  var lastPast = null;
+  var wide = matchMedia("(min-width:810px)");
   var queued = false;
   var update = function () {
     queued = false;
     var h = innerHeight;
-    var show = scrollY > h * 0.6 && close.getBoundingClientRect().top > h - 40;
+    var past = scrollY > h * 0.6;
+    var show = past && close.getBoundingClientRect().top > h - 40;
     dock.setAttribute("data-show", show ? "true" : "false");
-    
+
     if (show) dock.removeAttribute("inert"); else dock.setAttribute("inert", "");
+
+    var hand = past && wide.matches;
+    if (hand === lastPast) return;
+    lastPast = hand;
+    root.setAttribute("data-past", String(hand));
+    if (bar) {
+      bar.setAttribute("data-show", String(hand));
+      if (hand) bar.removeAttribute("inert"); else bar.setAttribute("inert", "");
+    }
+    if (topNav) {
+      if (hand) topNav.setAttribute("inert", ""); else topNav.removeAttribute("inert");
+    }
   };
   var queue = function () { if (!queued) { queued = true; requestAnimationFrame(update); } };
   addEventListener("scroll", queue, { passive: true });
   addEventListener("resize", queue);
   update();
 })();
+
 (function () {
   "use strict";
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -343,18 +441,20 @@
       };
       anim.oncancel = function () { closing = false; };
     };
+
     s.addEventListener("click", function (e) {
       e.preventDefault();
-      var from = d.offsetHeight;            // where it is now, even mid-ease
+      var from = d.offsetHeight;
       if (anim) { anim.cancel(); anim = null; }
       if (!d.open || closing) {
         d.open = true;
-        run(from, d.offsetHeight, true);     // natural open height
+        run(from, d.offsetHeight, true);
       } else {
         run(from, d.offsetHeight - a.offsetHeight, false);
       }
     });
   });
+
   var navBar = document.querySelector(".nav"), navHero = document.querySelector(".hero-wrap");
   if (navBar && navHero && "IntersectionObserver" in window) {
     new IntersectionObserver(function (e) {
