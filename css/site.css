@@ -394,7 +394,7 @@ button{font:inherit;color:inherit}
     left:max(calc(var(--gut) + 14px + 232px),calc(78% - var(--sw) / 2 - 11px));
     top:calc(clamp(104px,16.5svh,150px) + 147px - var(--sw) / 2.6)}
 
-  .hero .sub{max-width:230px}
+  .hero .sub{max-width:none;font-size:15px;text-wrap:balance}
 
   .hero-stack{position:relative;left:auto;top:auto;rotate:none;justify-self:center;
     --sw:min(80vw,340px);width:var(--sw);margin:clamp(4px,2svh,20px) 0 0}
@@ -405,6 +405,26 @@ button{font:inherit;color:inherit}
   .hero-stack{--sw:min(36vw,240px);width:var(--sw);
     left:calc(75% - var(--sw) / 2);
     top:calc(clamp(104px,16.5svh,150px) + 93px - var(--sw) / 2.6)}
+}
+
+.hero-wall{display:none}
+@media (max-width:559px){
+  .hero-stack{display:none}
+
+  .hero-wall{display:block;justify-self:center;width:100vw;perspective:600px;
+    margin:clamp(4px,2svh,20px) 0 -40px;
+    -webkit-mask-image:linear-gradient(transparent 0,#000 12%,#000 30%,transparent 64%);
+    mask-image:linear-gradient(transparent 0,#000 12%,#000 30%,transparent 64%)}
+
+  .hw-grid{width:72vw;height:55vw;margin-inline:auto;overflow-x:visible;overflow-y:clip;
+    transform:rotateX(52deg);transform-origin:50% 0}
+  .hw-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:17vw;gap:2vw;
+    animation:hw-glide 26s linear infinite}
+  @keyframes hw-glide{from{transform:translateY(-57vw)}to{transform:translateY(0)}}
+  .hw-tile{display:block;border-radius:12px;overflow:hidden;background:var(--wash);
+    box-shadow:0 0 0 1px rgba(0,0,0,.06),0 12px 22px -14px rgba(0,0,0,.4)}
+  .hw-tile img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .hw-tile:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 }
 
 .curtain .hero-wrap{height:min(100svh,680px);background:var(--paper)}
@@ -779,6 +799,7 @@ button{font:inherit;color:inherit}
 .stack-set{display:flex;align-items:center;gap:clamp(36px,4.4vw,72px);padding-right:clamp(36px,4.4vw,72px)}
 @keyframes stack-roll{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.stack-track{animation:none}}
+@media (prefers-reduced-motion:reduce){.hw-track{animation:none}}
 
 @media (max-width:560px){
   .stack-row{flex-direction:column;gap:28px;padding-block:30px}
