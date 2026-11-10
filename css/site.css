@@ -780,6 +780,15 @@ button{font:inherit;color:inherit}
 @keyframes stack-roll{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.stack-track{animation:none}}
 
+@media (max-width:560px){
+  .stack-row{flex-direction:column;gap:28px;padding-block:30px}
+  .stack-row .about-label{text-align:center;font-size:16px;font-weight:500;letter-spacing:-.02em}
+  .stack-marquee{flex:none;width:100%}
+  .stack-item{font-size:22px;gap:10px;letter-spacing:-.03em}
+  .stack-item svg{width:24px;height:24px}
+  .stack-set{gap:56px;padding-right:56px}
+}
+
 .pcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:clamp(14px,1.6vw,22px);margin-top:clamp(36px,5vw,72px)}
 .pcard{background:var(--paper);border:1px solid #e7e7e7;border-radius:22px;padding:8px;
@@ -843,31 +852,31 @@ button{font:inherit;color:inherit}
 .risk .badge{color:var(--faint);margin-bottom:1.2rem}
 .risk .btn{background:#fafafa;color:var(--ink);box-shadow:var(--sh-btn-light)}
 
-.phone{position:absolute;margin:0;aspect-ratio:390/844;background:#0c0c0c;
-  border-radius:9%/4.16%;
+.phone{position:absolute;margin:0;aspect-ratio:390/796;background:#0c0c0c;
+  border-radius:9%/4.41%;
   box-shadow:0 0 0 1px rgba(255,255,255,.16),0 34px 60px -22px rgba(0,0,0,.55),
     0 14px 26px -14px rgba(0,0,0,.4)}
-.phone img{position:absolute;left:2.6%;top:1.2%;width:94.8%;height:97.6%;
-  object-fit:cover;object-position:top;border-radius:6.75%/3.03%;display:block}
-.phone::after{content:"";position:absolute;left:48.2%;top:2.75%;width:3.6%;height:1.66%;
+.phone img{position:absolute;left:2.6%;top:1.27%;width:94.8%;height:97.46%;
+  object-fit:cover;object-position:top;border-radius:6.75%/3.22%;display:block}
+.phone::after{content:"";position:absolute;left:48.2%;top:2.9%;width:3.6%;height:1.76%;
   border-radius:50%;background:#000}
-.risk.ios .phone{border-radius:14.5%/6.7%}
-.risk.ios .phone img{left:3.6%;top:1.66%;width:92.8%;height:96.68%;border-radius:11.4%/5.1%}
-.risk.ios .phone::after{left:36%;top:3%;width:28%;height:3.1%;border-radius:999px}
+.risk.ios .phone{border-radius:14.5%/7.1%}
+.risk.ios .phone img{left:3.6%;top:1.76%;width:92.8%;height:96.48%;border-radius:11.4%/5.37%}
+.risk.ios .phone::after{left:36%;top:3.2%;width:28%;height:3.3%;border-radius:999px}
 
-.phone-a{z-index:2;left:9%;top:-33%;height:122%;rotate:-12deg}
-.phone-b{z-index:1;left:44%;top:-16%;height:122%;rotate:10deg}
+.phone-a{z-index:2;left:9%;top:-30%;height:115%;rotate:-12deg}
+.phone-b{z-index:1;left:44%;top:-11%;height:115%;rotate:10deg}
 
 @media (min-width:901px){.risk-sec{padding-top:calc(var(--sec) + clamp(40px,5vw,80px))}
 
-  }
+  .risk .lead{max-width:28.5em;font-size:clamp(15px,1.15vw,16.5px);text-wrap:balance}}
 @media (max-width:900px){
 
   .risk{grid-template-columns:minmax(0,1fr)}
   .risk-phones{min-height:0;height:clamp(250px,74vw,400px)}
   .risk-copy{padding:clamp(28px,7vw,44px) clamp(20px,6vw,40px) clamp(32px,8vw,48px)}
-  .phone-a{left:14%;top:-11%;height:106%}
-  .phone-b{left:51%;top:6%;height:90%}
+  .phone-a{left:14%;top:-9%;height:100%}
+  .phone-b{left:51%;top:7%;height:85%}
 
   .risk-sec{padding-top:calc(var(--sec) + 24px)}
 }
