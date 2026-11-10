@@ -32,6 +32,7 @@
     im.onload = function () { paint = im; };
     im.src = cv.getAttribute("data-src");
   }
+
   function dab(x, y) {
     var R = W * 0.11, now = performance.now();
     for (var k = 0; k < 3; k++) {
@@ -41,6 +42,7 @@
         r: R * (0.55 + Math.random() * 0.5), t: now });
     }
   }
+
   function stroke(x, y) {
     if (!last) { dab(x, y); last = { x: x, y: y }; return; }
     var dx = x - last.x, dy = y - last.y;
@@ -61,13 +63,13 @@
       ctx.save();
       ctx.beginPath();
       dabs.forEach(function (d) {
-        
+
         var r = d.r * Math.pow(1 - (now - d.t) / LIFE, 0.6);
         ctx.moveTo(d.x + r, d.y);
         ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
       });
       ctx.clip();
-      ctx.drawImage(paint, 0, 0, W, H);   // both files are cut to the same 4:5
+      ctx.drawImage(paint, 0, 0, W, H);
       ctx.restore();
     }
     if (dabs.length) raf = requestAnimationFrame(frame);
@@ -90,6 +92,7 @@
   });
   box.addEventListener("pointerleave", function () { last = null; });
   box.addEventListener("pointercancel", function () { last = null; });
+
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (es) {
       if (es[0].isIntersecting) { load(); io.disconnect(); }

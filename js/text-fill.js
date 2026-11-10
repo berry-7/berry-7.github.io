@@ -4,6 +4,7 @@
   if (!window.gsap || !window.ScrollTrigger) return;
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   gsap.registerPlugin(ScrollTrigger);
+
   var split = function (el, byWord) {
     var chars = [];
     var text = el.textContent.replace(/\s+/g, " ").trim();
@@ -31,6 +32,7 @@
     el.appendChild(vis);
     return chars;
   };
+
   var body = document.querySelector(".about-body");
   var chars = [], letters = 0;
   if (body) {
@@ -48,19 +50,19 @@
       gsap.fromTo(chars, { color: "#b8b8b8" }, {
         color: "#000000",
         ease: "none",
-        
+
         stagger: chars.length > 1 ? 0.02 * (letters - 1) / (chars.length - 1) : 0,
         scrollTrigger: {
           trigger: body,
-          start: "top 78%",       // first letter starts as the text enters
-          end: "bottom 48%",      // last one is black by the middle of the screen
+          start: "top 78%",
+          end: "bottom 48%",
           scrub: true,
-          
+
           refreshPriority: -2
         }
       });
     }
-    
+
     lines.forEach(function (l) {
       var h = l.el.closest("h2,h1,h3") || l.el;
       gsap.fromTo(l.chars, { color: "#767676" }, {
@@ -71,6 +73,7 @@
       });
     });
     ScrollTrigger.refresh();
+
     if (!body) return;
     var grid = body.closest(".about-grid") || body.parentNode;
     var lastH = grid.offsetHeight, rt;

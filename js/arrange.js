@@ -6,12 +6,13 @@
   if (!LOCAL && location.search.indexOf('notes=1') < 0) return;
 
   var KEY = 'tlhogi-moves-v2';
-  
+
   var cssLink = document.querySelector('link[href*="css/site.css"]');
   var CSSV = cssLink ? (cssLink.getAttribute('href').split('?v=')[1] || '') : '';
+
   var moves = {};
   try { moves = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { moves = {}; }
-  
+
   try {
     var v1 = JSON.parse(localStorage.getItem('tlhogi-moves-v1') || 'null');
     if (v1 && !localStorage.getItem(KEY)) {
@@ -25,6 +26,7 @@
     }
   } catch (e) {}
   function store() { try { localStorage.setItem(KEY, JSON.stringify(moves)); } catch (e) {} }
+
   function bp() {
     var w = window.innerWidth;
     if (w < 560) return { id: 'phone', label: 'phone (under 560)' };
@@ -60,15 +62,16 @@
     '.mv-tip button.mv-go{background:' + RED + ';color:#fff}',
     '.mv-tip button[disabled]{opacity:.4;cursor:default}',
     '.mv-tip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46ch}',
-    
+
     '@media (max-width:859px){.mv-tip{bottom:138px}}'
   ].join('');
   document.head.appendChild(css);
+
   function isUi(el) {
     return !el || el === document.documentElement || el === document.body ||
       !!(el.closest && el.closest('.mv-pad,.mv-tip,.mv-hover,[class^="sn-"],[class*=" sn-"]'));
   }
-  
+
   function selectorFor(el) {
     if (el.id) return '#' + el.id;
     var parts = [];
@@ -84,7 +87,7 @@
     if (!parts.length || parts[0].charAt(0) !== '#') parts.unshift('body');
     return parts.join(' > ');
   }
-  
+
   function labelFor(el) {
     var cls = (el.getAttribute('class') || '').split(/\s+/).filter(function (c) { return c && !/^(rv|in|mag)$/.test(c); })[0];
     var name = el.tagName.toLowerCase() + (cls ? '.' + cls : '');
@@ -96,7 +99,8 @@
     var a = el.getAnimations ? el.getAnimations() : [];
     return a.some(function (x) { return x.constructor && x.constructor.name === 'CSSAnimation'; });
   }
-  var base = new WeakMap();   // the element's own translate/scale/rotate, before ours
+
+  var base = new WeakMap();
   function baseOf(el) {
     if (base.has(el)) return base.get(el);
     var t = el.style.translate, s = el.style.scale, r = el.style.rotate;
@@ -117,6 +121,7 @@
     el.style.scale = moved ? String(b.sc * m.scale) : '';
     el.style.rotate = moved ? (b.rot + m.rotate) + 'deg' : '';
   }
+
   var draft = {};
   var painted = [];
   function loadFor(b) {
@@ -132,6 +137,7 @@
       if (el) { paint(el, draft[sel]); painted.push(el); }
     });
   }
+
   var on = false, btn = null, tip = null, hov = null, pad = null, nameTag = null, dot = null, rotDot = null;
   var sel = null, selEl = null, drag = null, raf = 0;
 
@@ -191,6 +197,7 @@
       n.addEventListener('pointercancel', upFn);
     });
   }
+
   function place(box, el, pad8) {
     if (!el || !el.isConnected) { box.style.display = 'none'; return; }
     var r = el.getBoundingClientRect();
@@ -222,6 +229,7 @@
     nameTag.textContent = draft[sel].label + note;
     drawTip();
   }
+
   function onMove(e) { if (!drag) hoverEl = pickAt(e.clientX, e.clientY); }
   function onDown(e) {
     if (isUi(e.target)) return;
@@ -256,7 +264,7 @@
     document.removeEventListener('click', swallow, true);
     if (pad) { pad.style.display = 'none'; hov.style.display = 'none'; }
     if (tip) { tip.remove(); tip = null; }
-    
+
     loadFor(bp());
   }
 
@@ -363,6 +371,7 @@
     try { document.execCommand('copy'); } catch (e) {}
     ta.remove();
   }
+
   function mount() {
     var bar = document.querySelector('.sn-bar');
     if (!bar) return false;
@@ -382,6 +391,7 @@
     if (on && e.altKey && e.key === 'ArrowUp') { e.preventDefault(); act('parent'); return; }
     if (e.altKey && e.key.toLowerCase() === 'm') { if (on) disarm(); else arm(); }
   });
+
   var lastBp = bp().id, rt;
   window.addEventListener('resize', function () {
     clearTimeout(rt);
@@ -391,10 +401,11 @@
       drawTip();
     }, 120);
   });
+
   if (document.readyState === 'complete') loadFor(bp());
   else window.addEventListener('load', function () { loadFor(bp()); });
   if (!mount()) {
-    
+
     var tries = 0;
     var iv = setInterval(function () { if (mount() || ++tries > 40) clearInterval(iv); }, 100);
   }

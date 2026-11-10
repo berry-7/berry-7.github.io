@@ -8,6 +8,7 @@
   var KEY = 'tlhogi-text-v1';
   var cssLink = document.querySelector('link[href*="css/site.css"]');
   var CSSV = cssLink ? (cssLink.getAttribute('href').split('?v=')[1] || '') : '';
+
   var data = { styles: {}, words: {} };
   try { data = JSON.parse(localStorage.getItem(KEY) || 'null') || data; } catch (e) {}
   data.styles = data.styles || {}; data.words = data.words || {};
@@ -20,6 +21,7 @@
     if (w <= 900) return { id: 'tablet', label: 'tablet (760-900)' };
     return { id: 'desktop', label: 'desktop (over 900)' };
   }
+
   var KNOBS = [
     { k: 'fontSize', name: 'Size', min: 10, max: 140, step: 1, unit: 'px' },
     { k: 'lineHeight', name: 'Line height', min: 0.8, max: 2.2, step: 0.01, unit: '' },
@@ -57,7 +59,7 @@
     '.tx-hint{color:#aaa;font-weight:500;margin-top:8px}',
     '[data-tx-editing]{outline:2px dashed ' + RED + '!important;outline-offset:3px;cursor:text!important;',
       '-webkit-user-select:text!important;user-select:text!important}',
-    
+
     '@media (max-width:859px){.tx-panel{bottom:138px;right:12px;left:12px;width:auto;max-height:42vh}',
       '.tx-panel.tx-top{top:12px;bottom:auto}}',
     '.tx-panel.tx-mini{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;max-height:none}',
@@ -65,6 +67,7 @@
     '.tx-panel.tx-mini .tx-btns{margin:0}'
   ].join('');
   document.head.appendChild(css);
+
   function isUi(el) {
     return !el || el === document.documentElement || el === document.body ||
       !!(el.closest && el.closest('.tx-panel,.tx-hover,.tx-sel,.mv-pad,.mv-tip,.mv-hover,[class^="sn-"],[class*=" sn-"]'));
@@ -87,14 +90,15 @@
     var txt = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 30);
     return el.tagName.toLowerCase() + (cls ? '.' + cls : '') + (txt ? ' "' + txt + (txt.length === 30 ? '...' : '') + '"' : '');
   }
-  
+
   function textHost(el) {
     var n = el;
     while (n && !isUi(n) && n.parentElement && getComputedStyle(n).display === 'inline') n = n.parentElement;
     return n;
   }
   function hasText(el) { return el && /\S/.test(el.textContent || ''); }
-  var draft = {};      // selector -> { props..., label }
+
+  var draft = {};
   var touched = [];
   function paint(el, d) {
     PROPS.forEach(function (p) { el.style[p] = d && d[p] != null ? d[p] : ''; });
@@ -115,6 +119,7 @@
       if (el && el.innerHTML === w.from) el.innerHTML = w.html;
     });
   }
+
   var on = false, btn = null, panel = null, hov = null, selBox = null, raf = 0;
   var sel = null, selEl = null, hoverEl = null, editing = false, wordsFrom = null;
 
@@ -141,7 +146,7 @@
         panel.style.top = ((vv ? vv.offsetTop : 0) + 8) + 'px';
         panel.style.bottom = 'auto';
       } else if (selEl) {
-        
+
         var r = selEl.getBoundingClientRect();
         var above = r.top - 24, below = innerHeight - 138 - r.bottom - 12;
         var top = above > below;
@@ -169,7 +174,7 @@
   function onMove(e) { if (!editing) hoverEl = pickAt(e.clientX, e.clientY); }
   function onDown(e) {
     if (isUi(e.target)) return;
-    if (editing && selEl && selEl.contains(e.target)) return;  // let the caret land
+    if (editing && selEl && selEl.contains(e.target)) return;
     e.preventDefault(); e.stopPropagation();
     if (editing) stopEditing();
     select(pickAt(e.clientX, e.clientY));
@@ -211,9 +216,10 @@
     document.removeEventListener('click', swallow, true);
     if (hov) { hov.style.display = 'none'; selBox.style.display = 'none'; }
     if (panel) { panel.remove(); panel = null; }
-    loadFor(bp());   // unsaved style changes are dropped
+    loadFor(bp());
   }
   document.addEventListener('tlhogi-tool', function (e) { if (on && e.detail !== 'text') disarm(); });
+
   function startEditing() {
     if (!selEl) return;
     editing = true;
@@ -222,7 +228,7 @@
     selEl.setAttribute('data-tx-editing', '');
     selEl.focus();
     if (small()) {
-      
+
       setTimeout(function () {
         var r = selEl.getBoundingClientRect();
         var vv = window.visualViewport, vh = vv ? vv.height : innerHeight;
@@ -244,6 +250,7 @@
     editing = false;
     drawPanel();
   }
+
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
   function count() {
     var n = Object.keys(data.words).length;
@@ -401,6 +408,7 @@
     try { document.execCommand('copy'); } catch (e) {}
     ta.remove();
   }
+
   function mount() {
     var bar = document.querySelector('.sn-bar');
     if (!bar) return false;

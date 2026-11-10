@@ -60,6 +60,19 @@
 
   var foot = document.querySelector("footer");
 
+  var fmark = foot && foot.querySelector(".foot-photo .foot-mark");
+  if (fmark) {
+    var setFade = function () {
+      var m = fmark.getBoundingClientRect().top - foot.getBoundingClientRect().top;
+      foot.style.setProperty("--fade-a", Math.round(m) + "px");
+      foot.style.setProperty("--fade-b", Math.round(m + 56) + "px");
+    };
+    setFade();
+    addEventListener("resize", setFade);
+    if (document.fonts) document.fonts.ready.then(setFade);
+    if ("ResizeObserver" in window) new ResizeObserver(setFade).observe(foot);
+  }
+
   if (foot && root.classList.contains("curtain")) {
     var applyFoot = function () {
       root.classList.add("no-footcurtain");
@@ -228,6 +241,39 @@
 
     addEventListener("resize", placeMark);
     if (document.fonts) document.fonts.ready.then(placeMark);
+  }
+
+  var navRow = document.querySelector(".nav-links");
+  if (navRow) {
+    var navRowLinks = navRow.querySelectorAll("a");
+    var navMark = document.createElement("span"), navHeld = null;
+    navMark.className = "nav-mark";
+    navMark.setAttribute("aria-hidden", "true");
+    navRow.insertBefore(navMark, navRow.firstChild);
+    navRow.classList.add("has-mark");
+    var placeNavMark = function () {
+      Array.prototype.forEach.call(navRowLinks, function (a) {
+        a.classList.toggle("is-lit", a === navHeld);
+      });
+      if (!navHeld || !navHeld.offsetWidth) { navMark.classList.remove("is-on"); return; }
+      var wasOff = !navMark.classList.contains("is-on");
+      navMark.classList.toggle("no-slide", wasOff);
+      navMark.style.transform = "translateX(" + navHeld.offsetLeft + "px)";
+      navMark.style.width = navHeld.offsetWidth + "px";
+      if (wasOff) { void navMark.offsetWidth; navMark.classList.add("is-on"); }
+    };
+    var holdNav = function (a) { if (navHeld !== a) { navHeld = a; placeNavMark(); } };
+    navRow.addEventListener("pointerover", function (e) {
+      var a = e.target.closest("a");
+      if (a && e.pointerType === "mouse") holdNav(a);
+    });
+    navRow.addEventListener("pointerleave", function () { holdNav(null); });
+    navRow.addEventListener("focusin", function (e) {
+      if (e.target.matches(":focus-visible")) holdNav(e.target);
+    });
+    navRow.addEventListener("focusout", function (e) {
+      if (!navRow.contains(e.relatedTarget)) holdNav(null);
+    });
   }
   var toned = document.querySelectorAll("[data-tone]");
   if (toned.length && "IntersectionObserver" in window) {

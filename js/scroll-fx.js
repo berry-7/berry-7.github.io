@@ -8,53 +8,40 @@
 
   var root = document.documentElement;
   root.classList.add("fx");
-  
+
   var PRI = -3;
   var px = function (n) { return n.toFixed(1) + "px"; };
 
   var start = function () {
     var mm = gsap.matchMedia();
+
     var leak = document.querySelector(".leak-cards");
-    if (leak) {
-      var now = leak.querySelector(".lcard.now"), after = leak.querySelector(".lcard.after");
-      gsap.timeline({ scrollTrigger: { trigger: leak, start: "top bottom", end: "bottom top",
-          scrub: true, refreshPriority: PRI } })
-        .fromTo(now, { rotation: -11, y: 40 }, { rotation: -3, y: 0, ease: "none", duration: 0.45 }, 0)
-        .fromTo(after, { rotation: 11, y: 64 }, { rotation: 3, y: 0, ease: "none", duration: 0.45 }, 0)
-        .to(now, { rotation: -1.5, y: -34, ease: "none", duration: 0.55 }, 0.45)
-        .to(after, { rotation: 4.5, y: -10, ease: "none", duration: 0.55 }, 0.45);
-    }
-    var track = document.querySelector(".stack-track");
-    var set = track && track.querySelector(".stack-set");
-    if (set) {
-      var x = 0, w = 0, seen = false;
-      var measure = function () { w = set.getBoundingClientRect().width; };
-      measure();
-      addEventListener("resize", measure);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-      new IntersectionObserver(function (e) { seen = e[0].isIntersecting; }).observe(track);
-      gsap.ticker.add(function () {
-        var v = M.velocity || 0;
-        if (!seen || !w || !v) return;
-        x = (((x - v * 0.55) % w) - w) % w;
-        track.style.transform = "translate3d(" + px(x) + ",0,0)";
+    var now = leak && leak.querySelector(".lcard.now");
+    var after = leak && leak.querySelector(".lcard.after");
+    if (now && after) {
+      var tick = after.querySelector(".lcard-mark");
+      mm.add({ wide: "(min-width: 761px)", narrow: "(max-width: 760px)" }, function (ctx) {
+        var wide = ctx.conditions.wide;
+        leak.classList.add("leak-scene");
+        gsap.timeline({ scrollTrigger: { trigger: leak, start: "top bottom", end: "center center",
+            scrub: true, refreshPriority: PRI } })
+          .fromTo(now, { rotation: -11, y: 40 }, { rotation: -3, y: 0, ease: "none" });
+
+        gsap.set(after, { yPercent: 118, rotation: 12, opacity: 0 });
+        if (tick) gsap.set(tick, { scale: 0.6, opacity: 0 });
+        var tl = gsap.timeline({ scrollTrigger: { trigger: leak, start: "center center",
+            end: "+=" + (wide ? 90 : 75) + "%", pin: true, scrub: true, anticipatePin: 1,
+            refreshPriority: -0.5 } });
+        tl.to(now, { xPercent: wide ? -32 : -4, rotation: -7, scale: 0.92, opacity: 0.6,
+              ease: "none", duration: 1 }, 0)
+          .to(after, { yPercent: 0, xPercent: wide ? 28 : 3, rotation: 3, opacity: 1,
+              ease: "none", duration: 1 }, 0);
+        if (tick) tl.to(tick, { scale: 1, opacity: 1, ease: "none", duration: 0.3 }, 0.75);
+        tl.to({}, { duration: 0.25 });
+        return function () { leak.classList.remove("leak-scene"); };
       });
     }
-    var pr = document.querySelector(".pr-lead");
-    var light = pr && pr.querySelector(".pr-light");
-    if (light) {
-      
-      var ring = light.querySelector(".pr-ring"), glow = light.querySelector(".pr-glow");
-      var spin = light.querySelectorAll("i");
-      gsap.set(spin, { xPercent: -50, yPercent: -50 });
-      gsap.timeline({ scrollTrigger: { trigger: pr, start: "top bottom", end: "bottom top",
-          scrub: true, refreshPriority: PRI } })
-        .fromTo(spin, { rotation: 0 }, { rotation: 540, ease: "none", duration: 1 }, 0)
-        .fromTo(ring, { opacity: 0 }, { opacity: 1, ease: "none", duration: 0.3 }, 0)
-        .fromTo(glow, { opacity: 0 }, { opacity: 0.55, ease: "none", duration: 0.3 }, 0)
-        .to(ring, { opacity: 0, ease: "none", duration: 0.25 }, 0.75)
-        .to(glow, { opacity: 0, ease: "none", duration: 0.25 }, 0.75);
-    }
+
     var gs = document.querySelector(".getsec");
     var bg = gs && gs.querySelector(".getsec-bg");
     if (bg) {
@@ -72,6 +59,7 @@
               invalidateOnRefresh: true, refreshPriority: PRI } });
       });
     }
+
     mm.add("(min-width: 901px)", function () {
       root.classList.add("fx-depth");
       gsap.utils.toArray("[data-depth]").forEach(function (el) {
@@ -91,6 +79,7 @@
       }
       return function () { root.classList.remove("fx-depth"); };
     });
+
     var mark = document.querySelector(".foot-mark span");
     var body = document.querySelector(".page-body");
     var foot = document.querySelector("footer");
@@ -100,7 +89,7 @@
       var measureFoot = function () { fh = Math.max(1, Math.min(foot.offsetHeight, innerHeight)); };
       measureFoot();
       addEventListener("resize", measureFoot);
-      
+
       var last = body.lastElementChild, near = false;
       if (last && "IntersectionObserver" in window) {
         new IntersectionObserver(function (e) { near = e[0].isIntersecting; }).observe(last);
@@ -115,8 +104,10 @@
       });
     }
 
+    ST.sort();
     ST.refresh();
   };
+
   if (document.readyState === "complete") setTimeout(start, 0);
   else addEventListener("load", function () { setTimeout(start, 0); });
 })();

@@ -3,6 +3,7 @@
   var canvas = document.querySelector('[data-hero-field]');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d', { alpha: false });
+
   var LANES = [
     { x: 0.43, y: 0.28, a: -55 },
     { x: 0.63, y: 0.28, a: -45 },
@@ -10,18 +11,19 @@
     { x: 0.68, y: 0.89, a: 12 },
     { x: 0.58, y: 1.04, a: 60 }
   ];
-  
+
   var CFG = {
     bg: '#ffffff', dpr: Math.min(2, window.devicePixelRatio || 1),
     cycle: 6.0, count: 5,
     wStart: 0.32, depth: 2, aspect: 0.75, radius: 0.06,
     fadeIn: 0.15, fadeFrom: 0.70, fieldFade: 2200
   };
+
   var SRC = ['hs-smoke-cafe.webp?v=2', 'hf-koekie-box.webp', 'hf-kikuyu-plans.webp',
     'hf-smoke-menu.webp', 'hs-soetkoek.webp?v=2', 'hf-kikuyu-services.webp',
     'hf-smoke-flavour.webp', 'hf-koekie-donut.webp', 'hs-kikuyu.webp?v=2',
     'hf-smoke-find.webp', 'hf-kikuyu-quote.webp'];
-  
+
   var images = [];
   function loadImages() {
     if (images.length) return;
@@ -34,12 +36,13 @@
   var ready = function (img) { return img.complete && img.naturalWidth > 0; };
 
   var frac = function (n) { return n - Math.floor(n); };
-  
+
   var cards = [];
   for (var i = 0; i < CFG.count; i++) {
     var L = LANES[(i * 2) % LANES.length];
     cards.push({ lane: L, a: L.a * Math.PI / 180, tx: 0, ty: 0, offset: i / CFG.count });
   }
+
   var headline = document.querySelector('.hero h1');
   var W = 1, H = 1;
   function resize() {
@@ -91,15 +94,16 @@
     for (var j = 0; j < cards.length; j++) {
       var c = cards[j];
       var run = elapsed / CFG.cycle + c.offset, life = frac(run);
-      
+
       var k = Math.floor(run) * CFG.count - j, n = images.length;
       var img = images[((k % n) + n) % n];
       var cos = Math.cos(c.a), sin = Math.sin(c.a);
-      
+
       var hw = w0 * 0.55, hh0 = w0 * CFG.aspect * 0.55, reach = Infinity;
       if (cos > 0.01) reach = Math.min(reach, (W - c.tx + hw) / cos);
       if (sin < -0.01) reach = Math.min(reach, (c.ty + hh0) / -sin);
       if (sin > 0.01) reach = Math.min(reach, (H - c.ty + hh0) / sin);
+
       var s = 1 / (1 + CFG.depth * life), sEnd = 1 / (1 + CFG.depth);
       var d = (s - sEnd) / (1 - sEnd);
       var rise = smooth(clamp01(life / CFG.fadeIn));
@@ -107,7 +111,7 @@
       list.push({ img: img, life: life, alpha: rise * (1 - away), w: w0 * s,
         px: c.tx + cos * reach * d, py: c.ty + sin * reach * d });
     }
-    
+
     list.sort(function (a, b) { return b.life - a.life; });
 
     for (var d = 0; d < list.length; d++) {
@@ -118,7 +122,7 @@
       ctx.globalAlpha = e.alpha * fieldIn;
       roundRect(x, y, w, h, w * CFG.radius);
       ctx.save(); ctx.clip(); drawCover(e.img, x, y, w, h); ctx.restore();
-      
+
       ctx.strokeStyle = 'rgba(0,0,0,.10)'; ctx.lineWidth = 1; ctx.stroke();
       ctx.restore();
     }
@@ -137,6 +141,7 @@
     if (reduced) { frame(performance.now()); return; }
     start();
   }
+
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (en) {
       onScreen = en[0].isIntersecting;

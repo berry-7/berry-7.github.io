@@ -96,7 +96,7 @@
 <script>document.documentElement.className="js";</script>
 <link rel="preload" href="fonts/switzer-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/switzer-500.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261101c">
+<link rel="stylesheet" href="css/site.css?v=20261110k">
 </head>
 <body>
 
@@ -493,18 +493,31 @@
 </section>
 
 <section class="sec shell risk-sec" data-tone="light">
-  <div class="risk">
-    <span class="badge rv"><span class="dot" aria-hidden="true"></span>No risk</span>
-    <h2 class="disp rv-h">
-      <span class="rv-line"><span class="mute">Pay nothing upfront.</span></span>
-      <span class="rv-line" style="--d:80ms"><span class="solid">Keep it only if you want it.</span></span>
-    </h2>
-    <p class="lead rv" style="--d:160ms">I build the entire site first, and you see the finished
-      thing before you decide. You pay nothing until you&rsquo;ve seen it and want to keep it.
-      Cancel anytime, and you keep the audit either way.</p>
-    <a class="btn mag rv" style="--d:240ms" href="#contact">
-      <img src="assets/tlhogi-96.webp" width="30" height="30" alt="">
-      Get my free audit</a>
+
+  <div class="risk" data-tone="dark">
+    <div class="risk-phones">
+      <figure class="phone phone-a rv-block">
+        <img src="assets/risk-koekie.webp?v=2" width="520" height="1125" loading="lazy" decoding="async"
+          alt="The Koekie Club site on a phone">
+      </figure>
+      <figure class="phone phone-b rv-block">
+        <img src="assets/risk-lawn.webp?v=3" width="520" height="1125" loading="lazy" decoding="async"
+          alt="The Kikuyu Lawn Co. site on a phone">
+      </figure>
+    </div>
+    <div class="risk-copy">
+      <span class="badge rv"><span class="dot" aria-hidden="true"></span>No risk</span>
+      <h2 class="disp rv-h">
+        <span class="rv-line"><span class="mute">Pay nothing upfront.</span></span>
+        <span class="rv-line" style="--d:80ms"><span class="solid">Keep it only if you want it.</span></span>
+      </h2>
+      <p class="lead rv" style="--d:160ms">I build the entire site first, and you see the finished
+        thing before you decide. You pay nothing until you&rsquo;ve seen it and want to keep it.
+        Cancel anytime, and you keep the audit either way.</p>
+      <a class="btn mag rv" style="--d:240ms" href="#contact">
+        <img src="assets/tlhogi-96.webp" width="30" height="30" alt="">
+        Get my free audit</a>
+    </div>
   </div>
 </section>
 
@@ -606,78 +619,49 @@
   </div>
 </section>
 
-<section class="sec shell close-photo" id="contact" data-tone="dark">
-
-  <picture class="close-bg rv-img" aria-hidden="true">
-    <source media="(max-width:700px)" type="image/webp"
-            srcset="assets/close-phone-560.webp 560w, assets/close-phone-820.webp 820w" sizes="100vw">
-    <source media="(min-width:1101px)" type="image/webp"
-            srcset="assets/close-desk-soft-800.webp 800w, assets/close-desk-soft-1200.webp 1200w, assets/close-desk-soft-1696.webp 1696w" sizes="100vw">
-    <img src="assets/close-desk-1200.webp" alt="" loading="lazy" decoding="async" width="1696" height="960"
-         srcset="assets/close-desk-800.webp 800w, assets/close-desk-1200.webp 1200w, assets/close-desk-1696.webp 1696w"
-         sizes="100vw">
-  </picture>
-  <div class="close-card rv">
-    <span class="eyebrow">Free audit</span>
-    <h2 class="disp rv-h" style="margin-top:1rem">
-      <span class="rv-line"><span class="mute">Find out what you&rsquo;re losing</span></span>
-      <span class="rv-line" style="--d:80ms"><span class="solid">before you spend a cent.</span></span>
-    </h2>
-    <p class="lead">Book 15 minutes. I show you what customers see when they look for you right
-      now, next to what your best competitor is showing them. You keep the audit either way.</p>
-    <div class="close-cta">
-      <a class="btn mag" href="mailto:tlhogitlhabane@gmail.com">
-        <img src="assets/tlhogi-96.webp" width="30" height="30" alt="">
-        Get my free audit</a>
-      <a class="btn-text" href="https://wa.me/27760825924">Message on WhatsApp</a>
-    </div>
-  </div>
-</section>
+<span id="contact" class="contact-mark"></span>
 
 </div>
 </main>
 
-<footer data-tone="dark">
-  <div class="shell">
-    <h2 class="foot-head rv-h">
-      <span class="rv-line"><span class="solid">Let&rsquo;s build something</span></span>
-      <span class="rv-line" style="--d:80ms"><span class="mute">worth booking.</span></span>
-    </h2>
+<footer class="foot-photo" data-tone="dark">
 
-    <div class="foot-cols">
-      <div>
-        <h4>Email</h4>
-        <a href="mailto:tlhogitlhabane@gmail.com">tlhogitlhabane@gmail.com</a>
-      </div>
-      <div>
-        <h4>Call me</h4>
-        <a href="https://wa.me/27760825924">+27 76 082 5924</a>
-      </div>
-      <div>
-        <h4>Based in</h4>
-        <p>South Africa</p>
-      </div>
+  <picture class="foot-bg" aria-hidden="true">
+    <source media="(max-width:700px)" type="image/webp"
+            srcset="assets/close-phone-560.webp 560w, assets/close-phone-820.webp 820w" sizes="100vw">
+    <img src="assets/close-desk-1200.webp" alt="" loading="lazy" decoding="async" width="1696" height="960"
+         srcset="assets/close-desk-800.webp 800w, assets/close-desk-1200.webp 1200w, assets/close-desk-1696.webp 1696w"
+         sizes="100vw">
+  </picture>
+  <div class="shell foot-in">
+    <div class="foot-top">
+      <p class="foot-tag"><span>Let&rsquo;s build something</span> worth booking.</p>
     </div>
 
-    <div class="foot-meta">
-      <div>
+    <div class="foot-cols">
+      <div class="foot-col foot-col-menu">
         <h4>Menu</h4>
-        <div class="foot-links">
+        <nav class="foot-links" aria-label="Footer">
           <a href="#work">Work</a>
           <a href="#process">Process</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
-        </div>
+        </nav>
       </div>
-      <div>
-        <h4>Legal</h4>
+      <div class="foot-col foot-col-social">
+
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
         <div class="foot-links">
-          <a href="#contact">Terms of service</a>
-          <a href="#contact">Privacy policy</a>
+          <a href="mailto:tlhogitlhabane@gmail.com">tlhogitlhabane@gmail.com</a>
+          <a href="https://wa.me/27760825924">+27 76 082 5924</a>
+          <p>South Africa</p>
         </div>
+        <a class="foot-pill" href="https://wa.me/27760825924">Message on WhatsApp</a>
       </div>
-      <p class="foot-legal">&copy; 2026 Letlhogonolo Tlhabane</p>
     </div>
+
   </div>
 
   <div class="foot-mark" aria-hidden="true"><span>TLHOGI</span></div>
@@ -709,13 +693,17 @@
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="vendor/MotionPathPlugin.min.js" defer></script>
 <script src="vendor/lenis.min.js" defer></script>
-<script src="js/motion.js?v=20261023a" defer></script>
-<script src="js/site.js?v=20261031g" defer></script>
+<script src="vendor/SplitText.min.js" defer></script>
+<script src="vendor/DrawSVGPlugin.min.js" defer></script>
+<script src="vendor/Flip.min.js" defer></script>
+<script src="js/motion.js?v=20261108g" defer></script>
+<script src="js/site.js?v=20261110b" defer></script>
 <script src="js/spiral.js?v=20261023a" defer></script>
 <script src="js/port-reveal.js?v=20261005f" defer></script>
 <script src="js/text-fill.js?v=20261023c" defer></script>
-<script src="js/gets-rail.js?v=20261023a" defer></script>
-<script src="js/scroll-fx.js?v=20261023e" defer></script>
+<script src="js/gets-rail.js?v=20261108d" defer></script>
+<script src="js/scroll-fx.js?v=20261109b" defer></script>
+<script src="js/motion-plus.js?v=20261109a" defer></script>
 
 <script src="js/annotate.js?v=20261001t" defer></script>
 <script src="js/arrange.js?v=20261004any2" defer></script>
