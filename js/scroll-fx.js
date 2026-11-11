@@ -80,7 +80,7 @@
       return function () { root.classList.remove("fx-depth"); };
     });
 
-    var mark = document.querySelector(".foot-mark span");
+    var mark = document.querySelector(".foot-mark:not(.fn-rise) span");
     var body = document.querySelector(".page-body");
     var foot = document.querySelector("footer");
     if (mark && body && foot) {
