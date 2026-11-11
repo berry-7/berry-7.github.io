@@ -166,4 +166,23 @@
       if (M.lenis) M.lenis.start();
     });
   }
+
+  if (window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    var riskCard = document.querySelector(".risk");
+    var pa = riskCard && riskCard.querySelector(".phone-a");
+    var pb = riskCard && riskCard.querySelector(".phone-b");
+    if (pa && pb) {
+      var k = function () { return innerWidth <= 900 ? 0.5 : 1; };
+      var ride = function (el, y0, y1, r0, r1) {
+        gsap.fromTo(el,
+          { "--py": function () { return y0 * k() + "px"; }, "--pr": r0 + "deg" },
+          { "--py": function () { return y1 * k() + "px"; }, "--pr": r1 + "deg", ease: "none",
+            scrollTrigger: { trigger: riskCard, start: "top bottom", end: "bottom top",
+              scrub: 0.6, invalidateOnRefresh: true, refreshPriority: -2 } });
+      };
+      ride(pa, 46, -46, -5, 4);
+      ride(pb, 84, -34, 6, -3);
+    }
+  }
 })();

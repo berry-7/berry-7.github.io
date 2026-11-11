@@ -45,7 +45,9 @@
       col.appendChild(s);
     }
     num.appendChild(col);
-    if (head) head.appendChild(num);
+
+    var h2 = head && head.querySelector("h2");
+    if (h2) h2.appendChild(num); else if (head) head.appendChild(num);
 
     var draws = cards.map(function (c) {
       var ps = c.querySelectorAll(".get-ic path[stroke]");
@@ -55,24 +57,15 @@
 
     var state = { q: 0 };
     var paint = function () {
-      var q = state.q, vw = document.documentElement.clientWidth;
+
+      var q = state.q, step = (cards[0].offsetWidth || 300) + 14;
       cards.forEach(function (card, i) {
         var rel = i - q;
-        var tx = 0, ty = 0, sc = 1, rot = 0, dim = 0, z;
-        if (rel >= 0) {
-          var d = Math.min(rel, DEPTH + 1);
-          ty = d * 16;
-          sc = 1 - 0.06 * Math.min(d, DEPTH);
-          dim = d <= DEPTH ? 0.24 * d : 0.72 + (d - DEPTH) * 0.28;
-          z = 100 - Math.round(rel * 10);
-        } else {
-          var f = Math.min(-rel, 1);
-          var e = f * f * (3 - 2 * f);
-          tx = -e * vw * 1.2;
-          ty = -e * 50;
-          rot = -e * 18;
-          z = 200 + i;
-        }
+        var off = Math.min(Math.abs(rel), 1);
+        var tx = rel * step, ty = off * 10, sc = 1 - 0.08 * off;
+        var rot = Math.max(-1, Math.min(1, rel)) * 3;
+        var dim = 0.42 * off;
+        var z = 100 - Math.round(Math.abs(rel) * 10);
         card.style.setProperty("--tx", tx.toFixed(1) + "px");
         card.style.setProperty("--ty", ty.toFixed(1) + "px");
         card.style.setProperty("--cs", sc.toFixed(3));
