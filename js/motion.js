@@ -17,8 +17,9 @@
   if (reduce) return;
 
   if (window.Lenis) {
+
     var lenis = new window.Lenis({ lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.9,
-      syncTouch: true, syncTouchLerp: 0.1 });
+      syncTouch: false });
     M.lenis = lenis;
 
     window.__smokeLenis = lenis;
