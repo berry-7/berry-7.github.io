@@ -81,6 +81,35 @@
   }
 
   box.style.touchAction = "pan-y";
+
+  var lock = document.createElement("button");
+  lock.type = "button";
+  lock.className = "port-lock";
+  lock.setAttribute("aria-pressed", "false");
+  lock.setAttribute("aria-label", "Lock the photo so a finger paints instead of scrolling");
+  lock.innerHTML =
+    '<svg class="lk-off" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 7.6-1.7"/></svg>' +
+    '<svg class="lk-on" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  box.appendChild(lock);
+  var locked = false;
+  var setLock = function (on) {
+    locked = on;
+    lock.setAttribute("aria-pressed", on ? "true" : "false");
+    box.classList.toggle("is-locked", on);
+    box.style.touchAction = on ? "none" : "pan-y";
+    if (on) box.setAttribute("data-lenis-prevent", ""); else box.removeAttribute("data-lenis-prevent");
+    last = null;
+  };
+  lock.addEventListener("click", function () { setLock(!locked); load(); if (!W) size(); });
+  lock.addEventListener("pointermove", function (e) { e.stopPropagation(); });
+  box.addEventListener("touchmove", function (e) {
+    if (locked && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting && locked) setLock(false);
+    }).observe(box);
+  }
   box.addEventListener("pointerenter", function () { load(); if (!W) size(); });
   box.addEventListener("pointerdown", function () { load(); if (!W) size(); });
   box.addEventListener("pointermove", function (e) {
