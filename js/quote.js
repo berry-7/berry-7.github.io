@@ -7,11 +7,28 @@
   var form = box.querySelector("form");
   var note = box.querySelector(".qp-status");
   var root = document.documentElement;
-  var OPENERS = 'a[href="#contact"], a[href="audit.html"], .dock-btn';
+  var OPENERS = 'a[href="#contact"], .dock-btn';
   var outside = "header, main, footer, .nav-sheet, .bnav, .dock";
   var last = null, open = false;
 
   var lenis = function () { return window.TLM && window.TLM.lenis; };
+
+  var ready = function () { box.removeAttribute("hidden"); };
+  if (window.requestIdleCallback) requestIdleCallback(ready, { timeout: 2500 }); else setTimeout(ready, 1200);
+
+  var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var timer = 0;
+
+  var settle = function () {
+    if (!open) return;
+    root.classList.add("qp-lock");
+    Array.prototype.forEach.call(document.querySelectorAll(outside), function (el) {
+      el.setAttribute("inert", ""); el.setAttribute("data-qp-inert", "");
+    });
+
+    var first = form.querySelector("input");
+    if (fine && first) first.focus({ preventScroll: true }); else panel.focus({ preventScroll: true });
+  };
 
   var show = function (from) {
     if (open) return;
@@ -19,30 +36,30 @@
 
     var sheet = document.getElementById("navSheet"), tog = document.getElementById("navToggle");
     if (sheet && sheet.getAttribute("data-open") === "true" && tog) tog.click();
-    box.removeAttribute("hidden");
-    void box.offsetWidth;
-    box.classList.add("is-open");
-    root.classList.add("qp-lock");
+    ready();
     if (lenis()) lenis().stop();
-    Array.prototype.forEach.call(document.querySelectorAll(outside), function (el) {
-      el.setAttribute("inert", ""); el.setAttribute("data-qp-inert", "");
-    });
-    var first = form.querySelector("input");
+    clearTimeout(timer);
 
-    setTimeout(function () { if (open && first) first.focus({ preventScroll: true }); }, 420);
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      if (!open) return;
+      box.classList.add("is-open");
+      timer = setTimeout(settle, 720);
+    }); });
   };
 
   var hide = function () {
     if (!open) return;
     open = false;
+    clearTimeout(timer);
     box.classList.remove("is-open");
     root.classList.remove("qp-lock");
     if (lenis()) lenis().start();
-    Array.prototype.forEach.call(document.querySelectorAll("[data-qp-inert]"), function (el) {
-      el.removeAttribute("inert"); el.removeAttribute("data-qp-inert");
-    });
-    setTimeout(function () { if (!open) box.setAttribute("hidden", ""); }, 520);
     if (last && last.focus) last.focus({ preventScroll: true });
+    timer = setTimeout(function () {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-qp-inert]"), function (el) {
+        el.removeAttribute("inert"); el.removeAttribute("data-qp-inert");
+      });
+    }, 720);
   };
 
   window.addEventListener("click", function (e) {
