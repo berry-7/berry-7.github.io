@@ -96,7 +96,7 @@
 <script>document.documentElement.className="js";</script>
 <link rel="preload" href="fonts/switzer-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/switzer-500.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261111h">
+<link rel="stylesheet" href="css/site.css?v=20261111k">
 </head>
 <body>
 
@@ -657,6 +657,7 @@
         </div>
       </div>
       <nav class="foot-links fn-links rv" style="--d:300ms" aria-label="Footer">
+        <a href="#top">Home</a>
         <a href="#work">Work</a>
         <a href="#process">Process</a>
         <a href="#pricing">Pricing</a>
@@ -697,6 +698,32 @@
   </div>
 </nav>
 
+<div class="qp" id="quote" hidden>
+  <div class="qp-scrim" data-qp-close></div>
+  <aside class="qp-panel" role="dialog" aria-modal="true" aria-labelledby="qpTitle" data-lenis-prevent>
+    <button class="qp-x" type="button" data-qp-close aria-label="Close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+    <h2 class="qp-title" id="qpTitle">Get my free audit</h2>
+    <p class="qp-sub">Fill out the form below or <a href="https://wa.me/27760825924">message me on WhatsApp.</a></p>
+    <div class="qp-me">
+      <img src="assets/tlhogi-96.webp" srcset="assets/tlhogi-96.webp 96w, assets/tlhogi-192.webp 192w" sizes="46px" width="46" height="46" alt="">
+      <p><b>Tlhogi Tlhabane</b><a href="mailto:tlhogitlhabane@gmail.com">tlhogitlhabane@gmail.com</a></p>
+    </div>
+    <form class="qp-form">
+      <div class="qp-row">
+        <label class="qp-f"><span>Name</span><input type="text" name="name" placeholder="Name" autocomplete="name" required></label>
+        <label class="qp-f"><span>Email</span><input type="email" name="email" placeholder="Email" autocomplete="email" required></label>
+      </div>
+      <label class="qp-f"><span>Your business name or website</span><input type="text" name="business" placeholder="Business" autocomplete="organization" required></label>
+      <label class="qp-f"><span>Send a message or describe your business</span><textarea name="message" rows="6"></textarea></label>
+      <button class="qp-send" type="submit">Send message</button>
+      <p class="qp-status" role="status" hidden>WhatsApp has opened with your message. Press send there and I&rsquo;ll reply.</p>
+    </form>
+    <p class="qp-fine">Sending opens WhatsApp with your answers written out, ready to send.</p>
+  </aside>
+</div>
+
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="vendor/MotionPathPlugin.min.js" defer></script>
@@ -705,13 +732,14 @@
 <script src="vendor/DrawSVGPlugin.min.js" defer></script>
 <script src="vendor/Flip.min.js" defer></script>
 <script src="js/motion.js?v=20261111a" defer></script>
-<script src="js/site.js?v=20261110b" defer></script>
+<script src="js/site.js?v=20261111a" defer></script>
 <script src="js/spiral.js?v=20261023a" defer></script>
 <script src="js/port-reveal.js?v=20261111a" defer></script>
 <script src="js/text-fill.js?v=20261023c" defer></script>
 <script src="js/gets-rail.js?v=20261111b" defer></script>
 <script src="js/scroll-fx.js?v=20261111a" defer></script>
 <script src="js/motion-plus.js?v=20261111a" defer></script>
+<script src="js/quote.js?v=20261111a" defer></script>
 
 <script src="js/annotate.js?v=20261001t" defer></script>
 <script src="js/arrange.js?v=20261004any2" defer></script>

@@ -84,7 +84,9 @@
         root.style.setProperty("--foot-h", "0px");
         return;
       }
-      root.style.setProperty("--foot-h", h + "px");
+
+      var full = Math.abs(h - innerHeight) <= 4 && window.CSS && CSS.supports("height", "100dvh");
+      root.style.setProperty("--foot-h", full ? "100dvh" : h + "px");
     };
 
     var setFoot = function (heroShowing) {
