@@ -101,4 +101,45 @@
   };
   if (gsap) gsap.ticker.add(tick);
   else (function f() { tick(); requestAnimationFrame(f); })();
+
+  var placeOf = function () {
+    var secs = document.querySelectorAll("section, footer");
+    for (var i = 0; i < secs.length; i++) {
+      var s = secs[i];
+      var b = s.parentNode && s.parentNode.classList.contains("pin-spacer") ? s.parentNode : s;
+      var r = b.getBoundingClientRect();
+      if (r.bottom > 0 && r.height > 0) return { el: b, sec: s, f: Math.max(0, -r.top) / r.height };
+    }
+    return null;
+  };
+  var place = null, holding = false, restT = 0, settleT = 0;
+  var cw = document.documentElement.clientWidth;
+  addEventListener("scroll", function () {
+    if (holding) return;
+    clearTimeout(restT);
+    restT = setTimeout(function () { place = window.scrollY > 0 ? placeOf() : null; }, 150);
+  }, { passive: true });
+  var putBack = function () {
+    holding = false;
+    if (!place) return;
+    var s = place.sec;
+    var b = s.parentNode && s.parentNode.classList.contains("pin-spacer") ? s.parentNode : s;
+    if (!b.isConnected) return;
+    var r = b.getBoundingClientRect();
+    var y = Math.round(window.scrollY + r.top + place.f * r.height);
+    if (Math.abs(y - window.scrollY) < 2) return;
+    if (M.lenis) M.lenis.scrollTo(y, { immediate: true, force: true });
+    else window.scrollTo(0, y);
+  };
+
+  var later = function () { clearTimeout(settleT); settleT = setTimeout(putBack, 350); };
+  addEventListener("resize", function () {
+    var w = document.documentElement.clientWidth;
+    if (w === cw) return;
+    cw = w;
+    holding = true;
+    clearTimeout(restT);
+    later();
+  });
+  if (ST) ST.addEventListener("refresh", function () { if (holding) later(); });
 })();

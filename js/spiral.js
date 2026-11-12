@@ -56,6 +56,8 @@
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var vw = function () { return window.innerWidth; };
   var vh = function () { return window.innerHeight; };
+
+  var cw = function () { return document.documentElement.clientWidth; };
   var cardSize = function () {
     var c = cards[0];
     return { w: c.offsetWidth || vw() * 0.44, h: c.offsetHeight || vw() * 0.44 * 0.8 };
@@ -175,8 +177,15 @@
   }
 
   var built = false;
+  var spiralTl = null;
   function build() {
-    window.ScrollTrigger.getAll().forEach(function (t) { if (t.vars.id === 'spiral') t.kill(); });
+
+    if (spiralTl) {
+      if (spiralTl.scrollTrigger) spiralTl.scrollTrigger.kill(true);
+      spiralTl.kill();
+      spiralTl = null;
+    }
+    window.ScrollTrigger.getAll().forEach(function (t) { if (t.vars.id === 'spiral') t.kill(true); });
     setStart();
     panels.forEach(function (p) { p.v = 100; setReveal(p); });
     if (leftTrack) gsap.set([leftTrack, rightTrack], { yPercent: 0 });
@@ -247,16 +256,31 @@
       }
     });
     tl.to(stage, { duration: 0.001 }, 1.0);
+    spiralTl = tl;
     built = true;
+
+    lastW = cw(); lastH = vh();
   }
 
   if (document.readyState === 'complete') build();
   else window.addEventListener('load', build);
 
-  var rt;
+  function rebuild() {
+    build();
+    window.ScrollTrigger.sort();
+    window.ScrollTrigger.refresh();
+  }
+
+  var rt, lastW = cw(), lastH = vh();
   window.addEventListener('resize', function () {
     clearTimeout(rt);
-    rt = setTimeout(function () { if (built) build(); }, 220);
+    rt = setTimeout(function () {
+      var w = cw(), h = vh();
+      if (window.ScrollTrigger.isTouch === 1 && w === lastW &&
+          Math.abs(h - lastH) < lastH * 0.25) return;
+      lastW = w; lastH = h;
+      if (built) rebuild();
+    }, 220);
   });
 
 })();

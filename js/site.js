@@ -55,7 +55,14 @@
     }
     paint();
     addEventListener("scroll", onScroll, { passive: true });
-    addEventListener("resize", function () { measureHero(); onScroll(); });
+
+    var heroW = document.documentElement.clientWidth;
+    var heroTouch = matchMedia("(hover: none) and (pointer: coarse)").matches;
+    addEventListener("resize", function () {
+      var w = document.documentElement.clientWidth;
+      if (!(heroTouch && w === heroW)) { heroW = w; measureHero(); }
+      onScroll();
+    });
   }
 
   var foot = document.querySelector("footer");
@@ -100,8 +107,15 @@
 
     applyFoot();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(applyFoot);
-    var ft;
-    addEventListener("resize", function () { clearTimeout(ft); ft = setTimeout(applyFoot, 150); });
+
+    var ft, footW = document.documentElement.clientWidth;
+    var touchOnly = matchMedia("(hover: none) and (pointer: coarse)").matches;
+    addEventListener("resize", function () {
+      var w = document.documentElement.clientWidth;
+      if (touchOnly && w === footW) return;
+      footW = w;
+      clearTimeout(ft); ft = setTimeout(applyFoot, 150);
+    });
   }
 
   var STEP = 80;
