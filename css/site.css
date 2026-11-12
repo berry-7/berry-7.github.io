@@ -775,19 +775,6 @@ button{font:inherit;color:inherit}
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 62%);mask-image:linear-gradient(to bottom,transparent 0,#000 62%)}
 .port-bar{position:absolute;left:0;right:0;bottom:0;pointer-events:none;
   padding:0 clamp(14px,6%,24px) clamp(14px,6%,24px)}
-
-.port-lock{display:none;position:absolute;right:16px;bottom:16px;z-index:3;width:46px;height:46px;
-  padding:0;border:0;border-radius:50%;place-items:center;cursor:pointer;
-  background:rgba(255,255,255,.9);color:var(--ink);
-  box-shadow:0 0 0 1px rgba(0,0,0,.08),0 8px 18px -8px rgba(0,0,0,.4);
-  transition:background-color .2s var(--ease),color .2s var(--ease)}
-.port-lock svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;
-  stroke-linecap:round;stroke-linejoin:round}
-.port-lock .lk-on,.port-lock[aria-pressed="true"] .lk-off{display:none}
-.port-lock[aria-pressed="true"] .lk-on{display:block}
-.port-lock[aria-pressed="true"]{background:var(--ink);color:#fff}
-.port-lock:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-@media (hover:none),(pointer:coarse){.port-lock{display:grid}}
 .port-who{display:flex;align-items:center;gap:10px}
 .port-who img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:none}
 .port-id{display:flex;flex-direction:column;line-height:1.2}
